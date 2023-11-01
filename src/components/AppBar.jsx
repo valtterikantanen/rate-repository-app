@@ -16,13 +16,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBarTabs = ['Repositories'];
+const AppBarTabs = [
+  { path: '/', text: 'Repositories' },
+  { path: 'sign-in', text: 'Sign in' },
+];
 
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      {AppBarTabs.map(tab => (
-        <AppBarTab key={tab} tab={tab} />
+      {AppBarTabs.map(({ path, text }) => (
+        <AppBarTab key={text} path={path} text={text} />
       ))}
     </View>
   );
