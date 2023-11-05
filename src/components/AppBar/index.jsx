@@ -1,6 +1,9 @@
+import { useQuery } from '@apollo/client';
 import Constants from 'expo-constants';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import { useMemo } from 'react';
+import { GET_CURRENT_USER } from '../../graphql/queries';
 import theme from '../../theme';
 import AppBarTab from './AppBarTab';
 
@@ -16,16 +19,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBarTabs = [
-  { path: '/', text: 'Repositories' },
-  { path: 'sign-in', text: 'Sign in' },
-];
-
 const AppBar = () => {
+  const { data } = useQuery(GET_CURRENT_USER, {
+    fetchPolicy: 'cache-and-network',
+  });
+
+  const appBarTabs = useMemo(() => {
+    const tabs = [{ path: '/', text: 'Repositories' }];
+    if (data && data.me) {
+      tabs.push({ path: 'sign-out', text: 'Sign out' });
+    } else {
+      tabs.push({ path: 'sign-in', text: 'Sign in' });
+    }
+    return tabs;
+  }, [data]);
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
-        {AppBarTabs.map(({ path, text }) => (
+        {appBarTabs.map(({ path, text }) => (
           <AppBarTab key={text} path={path} text={text} />
         ))}
       </ScrollView>
