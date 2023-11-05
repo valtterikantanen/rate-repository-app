@@ -1,5 +1,7 @@
 import { Formik } from 'formik';
+import { useEffect } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { useNavigate } from 'react-router-native';
 import * as yup from 'yup';
 
 import { useSignIn } from '../../hooks/useSignIn';
@@ -49,14 +51,20 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 export const SignIn = () => {
-  const [signIn] = useSignIn();
+  const [signIn, { called, error, loading, data }] = useSignIn();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (called && !loading && !error && data) {
+      if (data.authenticate.accessToken) navigate('/');
+    }
+  }, [called, loading, error, data, navigate]);
 
   const onSubmit = async values => {
     const { username, password } = values;
 
     try {
-      const { data } = await signIn({ username, password });
-      console.log(data);
+      await signIn({ username, password });
     } catch (e) {
       console.log(e);
     }
