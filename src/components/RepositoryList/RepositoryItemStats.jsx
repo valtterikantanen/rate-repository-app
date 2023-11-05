@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
 });
 
 const formatNumber = num => {
-  // eslint-disable-next-line no-undef
-  return new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(num);
+  const formattedNumber = num >= 1000 ? `${(num / 1000).toFixed(1)}k` : num;
+  return formattedNumber;
 };
 
 const StatsItem = ({ number, text }) => (
