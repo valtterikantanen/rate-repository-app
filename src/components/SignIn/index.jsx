@@ -1,5 +1,4 @@
 import { Formik } from 'formik';
-import { useEffect } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import * as yup from 'yup';
@@ -50,29 +49,28 @@ const SignInForm = ({ onSubmit }) => {
   );
 };
 
-export const SignIn = () => {
-  const [signIn, { called, error, loading, data }] = useSignIn();
-  const navigate = useNavigate();
+export const SignInContainer = ({ onSubmit }) => {
+  return (
+    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+    </Formik>
+  );
+};
 
-  useEffect(() => {
-    if (called && !loading && !error && data) {
-      if (data.authenticate.accessToken) navigate('/');
-    }
-  }, [called, loading, error, data, navigate]);
+export const SignIn = () => {
+  const [signIn] = useSignIn();
+  const navigate = useNavigate();
 
   const onSubmit = async values => {
     const { username, password } = values;
 
     try {
       await signIn({ username, password });
+      navigate('/', { replace: true });
     } catch (e) {
       console.log(e);
     }
   };
 
-  return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
-    </Formik>
-  );
+  return <SignInContainer onSubmit={onSubmit} />;
 };
