@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
 import { NativeRouter } from 'react-router-native';
 import { RepositoryListContainer } from '.';
-import { formatNumber } from '../../utils/formatNumber';
+import { formatNumber } from '../../utils/format';
 
 describe('RepositoryList', () => {
   describe('RepositoryListContainer', () => {
