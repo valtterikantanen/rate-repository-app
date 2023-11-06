@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
+import { formatNumber } from '../../utils/formatNumber';
 import Text from '../Text';
 
 const styles = StyleSheet.create({
@@ -15,11 +16,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-const formatNumber = num => {
-  const formattedNumber = num >= 1000 ? `${(num / 1000).toFixed(1)}k` : num;
-  return formattedNumber;
-};
 
 const StatsItem = ({ number, text }) => (
   <View style={styles.statsItem}>
