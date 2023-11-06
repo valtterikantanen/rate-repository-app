@@ -27,6 +27,7 @@ const AppBar = () => {
   const appBarTabs = useMemo(() => {
     const tabs = [{ path: '/', text: 'Repositories' }];
     if (data && data.me) {
+      tabs.push({ path: 'new-review', text: 'Create a review' });
       tabs.push({ path: 'sign-out', text: 'Sign out' });
     } else {
       tabs.push({ path: 'sign-in', text: 'Sign in' });
