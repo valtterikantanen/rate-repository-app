@@ -5,8 +5,16 @@ import { REPOSITORY_FIELDS_FRAGMENT } from './fragments';
 export const GET_REPOSITORIES = gql`
   ${REPOSITORY_FIELDS_FRAGMENT}
 
-  query getRepositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection) {
-    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+  query getRepositories(
+    $orderBy: AllRepositoriesOrderBy
+    $orderDirection: OrderDirection
+    $searchKeyword: String
+  ) {
+    repositories(
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      searchKeyword: $searchKeyword
+    ) {
       edges {
         node {
           ...RepositoryFields
