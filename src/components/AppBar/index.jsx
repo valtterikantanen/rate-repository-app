@@ -31,6 +31,7 @@ const AppBar = () => {
       tabs.push({ path: 'sign-out', text: 'Sign out' });
     } else {
       tabs.push({ path: 'sign-in', text: 'Sign in' });
+      tabs.push({ path: 'sign-up', text: 'Sign up' });
     }
     return tabs;
   }, [data]);
